@@ -46,12 +46,12 @@ class DiffEntityComparison {
    *
    * @var \Drupal\Core\Datetime\DateFormatter
    */
-  protected $date;
+  public $date;
 
   /**
    * Wrapper object for writing/reading simple configuration from diff.settings.yml
    */
-  protected $config;
+  public $config;
 
   /**
    * Wrapper object for writing/reading simple configuration from diff.plugins.yml
@@ -66,7 +66,7 @@ class DiffEntityComparison {
   /**
    * Represents non breaking space HTML character entity marked as safe markup.
    */
-  protected $nonBreakingSpace;
+  public $nonBreakingSpace;
 
   /**
    * The entity comparison service for diff.
@@ -234,7 +234,7 @@ class DiffEntityComparison {
    * @return array
    *   Array of rows usable with theme('table').
    */
-  protected function getRows($a, $b, $show_header = FALSE, &$line_stats = NULL) {
+  public function getRows($a, $b, $show_header = FALSE, &$line_stats = NULL) {
     $a = is_array($a) ? $a : explode("\n", $a);
     $b = is_array($b) ? $b : explode("\n", $b);
 
