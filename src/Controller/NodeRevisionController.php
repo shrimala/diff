@@ -71,14 +71,14 @@ class NodeRevisionController extends EntityComparisonBase {
 
     // Perform comparison only if both node revisions loaded successfully.
     if ($left_revision != FALSE && $right_revision != FALSE) {
-      $fields = $this->compareRevisions($left_revision, $right_revision);
+      $fields = $this->entityComparison->compareRevisions($left_revision, $right_revision);
       $node_base_fields = $this->entityManager()->getBaseFieldDefinitions('node');
       // Check to see if we need to display certain fields or not based on
       // selected view mode display settings.
       foreach ($fields as $field_name => $field) {
         // If we are dealing with nodes only compare those fields
         // set as visible from the selected view mode.
-        $view_mode = $this->config->get('content_type_settings.' . $node->getType() . '.view_mode');
+        $view_mode = $this->entityComparison->config->get('content_type_settings.' . $node->getType() . '.view_mode');
         // If no view mode is selected use the default view mode.
         if ($view_mode == NULL) {
           $view_mode = 'default';
@@ -99,7 +99,7 @@ class NodeRevisionController extends EntityComparisonBase {
             'class' => array('field-name'),
           );
         }
-        $field_diff_rows = $this->getRows(
+        $field_diff_rows = $this->entityComparison->getRows(
           $field['#states'][$filter]['#left'],
           $field['#states'][$filter]['#right']
         );
@@ -115,7 +115,7 @@ class NodeRevisionController extends EntityComparisonBase {
 
       // Add the CSS for the diff.
       $build['#attached']['library'][] = 'diff/diff.general';
-      $theme = $this->config->get('general_settings.theme');
+      $theme = $this->entityComparison->config->get('general_settings.theme');
       if ($theme) {
         if ($theme == 'default') {
           $build['#attached']['library'][] = 'diff/diff.default';
@@ -176,7 +176,7 @@ class NodeRevisionController extends EntityComparisonBase {
     $header = array();
 
     foreach ($revisions as $revision) {
-      $revision_log = $this->nonBreakingSpace;
+      $revision_log = $this->entityComparison->nonBreakingSpace;
 
       if ($revision->revision_log->value != '') {
         $revision_log = Xss::filter($revision->revision_log->value);
@@ -185,7 +185,7 @@ class NodeRevisionController extends EntityComparisonBase {
         '#theme' => 'username',
         '#account' => $revision->uid->entity,
       );
-      $revision_date = $this->date->format($revision->getRevisionCreationTime(), 'short');
+      $revision_date = $this->entityComparison->date->format($revision->getRevisionCreationTime(), 'short');
       $revision_link = $this->t($revision_log . '@date', array(
         '@date' => $this->l($revision_date, Url::fromRoute('entity.node.revision', array(
           'node' => $revision->id(),
@@ -200,7 +200,7 @@ class NodeRevisionController extends EntityComparisonBase {
       //   'colspan' => 1,
       // );
       $header[] = array(
-        'data' => array('#markup' => $this->nonBreakingSpace),
+        'data' => array('#markup' => $this->entityComparison->nonBreakingSpace),
         'colspan' => 1,
       );
       $header[] = array(
@@ -242,10 +242,10 @@ class NodeRevisionController extends EntityComparisonBase {
     }
     else {
       // Second column.
-      $row[] = $this->nonBreakingSpace;
+      $row[] = $this->entityComparison->nonBreakingSpace;
     }
     // Third column.
-    $row[] = $this->nonBreakingSpace;
+    $row[] = $this->entityComparison->nonBreakingSpace;
     // Find the next revision.
     $i = 0;
     while ($i < $revisions_count && $right_vid >= $vids[$i]) {
@@ -269,7 +269,7 @@ class NodeRevisionController extends EntityComparisonBase {
     }
     else {
       // Forth column.
-      $row[] = $this->nonBreakingSpace;
+      $row[] = $this->entityComparison->nonBreakingSpace;
     }
 
     // If there are only 2 revision return an empty row.
