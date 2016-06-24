@@ -104,6 +104,7 @@ class DiffEntityComparison {
    */
   public static function create(ContainerInterface $container) {
     return new static(
+      $container->get('config.factory'),
       $container->get('diff.diff.formatter'),
       $container->get('date.formatter'),
       $container->get('plugin.manager.field.field_type'),
