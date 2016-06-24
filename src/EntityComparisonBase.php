@@ -44,20 +44,4 @@ class EntityComparisonBase extends ControllerBase {
     );
   }
 
-  /**
-   * This method should return an array of items ready to be compared.
-   *
-   * @param ContentEntityInterface $left_entity
-   *   The left entity
-   * @param ContentEntityInterface $right_entity
-   *   The right entity
-   *
-   * @return array
-   *   Items ready to be compared by the Diff component.
-   */
-  public function compareRevisions(ContentEntityInterface $left_entity, ContentEntityInterface $right_entity) {
-    $result = $this->entityComparison->compareRevisions($left_entity, $right_entity);
-    return $result;
-  }
-
 }
