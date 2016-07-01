@@ -11,7 +11,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\diff\DiffEntityComparison;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Datetime\DateFormatter;
+use Drupal\Component\Utility\Xss;
+use Drupal\Core\Mail\MailFormatHelper;
 
 /**
  * Builds an array of data out of entity fields.
