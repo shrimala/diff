@@ -12,7 +12,6 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Component\Diff\Diff;
 use Drupal\Core\Mail\MailFormatHelper;
-use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Config\ConfigFactory;
 
 /**
@@ -28,7 +27,7 @@ class DiffEntityComparison {
    *
    * @var Drupal\Core\Config\ConfigFactory
    */
-  protected $config_factory;
+  protected $configfactory;
 
   /**
    * DiffFormatter service.
@@ -38,12 +37,12 @@ class DiffEntityComparison {
   protected $diffFormatter;
 
   /**
-   * Wrapper object for writing/reading simple configuration from diff.settings.yml
+   * Wrapper obj. for write/read a simple configuration from diff.settings.yml.
    */
   public $config;
 
   /**
-   * Wrapper object for writing/reading simple configuration from diff.plugins.yml
+   * Wrapper object for write/read a simple configuration from diff.plugins.yml.
    */
   protected $pluginsConfig;
 
@@ -66,26 +65,25 @@ class DiffEntityComparison {
    *   Diff formatter service.
    * @param PluginManagerInterface $plugin_manager
    *   The Plugin manager service.
-   * @param DiffEntityParser $entityParser
+   * @param DiffEntityParser $entity_parser
    *   The diff field builder plugin manager.
    */
-  public function __construct(ConfigFactory $config_factory, DiffFormatter $diff_formatter, PluginManagerInterface $plugin_manager, DiffEntityParser $entityParser) {
-    $this->config_factory = $config_factory;
+  public function __construct(ConfigFactory $config_factory, DiffFormatter $diff_formatter, PluginManagerInterface $plugin_manager, DiffEntityParser $entity_parser) {
+    $this->configfactory = $config_factory;
     $this->diffFormatter = $diff_formatter;
     $this->fieldTypeDefinitions = $plugin_manager->getDefinitions();
-    $this->config = $this->config_factory->get('diff.settings');
-    $this->pluginsConfig = $this->config_factory->get('diff.plugins');
-    $this->entityParser = $entityParser;
-    
+    $this->config = $this->configfactory->get('diff.settings');
+    $this->pluginsConfig = $this->configfactory->get('diff.plugins');
+    $this->entityParser = $entity_parser;
   }
 
   /**
    * This method should return an array of items ready to be compared.
    *
    * @param ContentEntityInterface $left_entity
-   *   The left entity
+   *   The left entity.
    * @param ContentEntityInterface $right_entity
-   *   The right entity
+   *   The right entity.
    *
    * @return array
    *   Items ready to be compared by the Diff component.
@@ -206,10 +204,10 @@ class DiffEntityComparison {
    *   The source string to compare from.
    * @param string $b
    *   The target string to compare to.
-   * @param boolean $show_header
+   * @param bool $show_header
    *   Display diff context headers. For example, "Line x".
    * @param array $line_stats
-   *   This structure tracks line numbers across multiple calls to DiffFormatter.
+   *   This structure tracks line no. across multiple calls to DiffFormatter.
    *
    * @return array
    *   Array of rows usable with theme('table').
