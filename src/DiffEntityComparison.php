@@ -12,7 +12,6 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Component\Diff\Diff;
 use Drupal\Core\Datetime\DateFormatter;
-use Drupal\Component\Utility\Xss;
 use Drupal\Core\Mail\MailFormatHelper;
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Config\ConfigFactory;
