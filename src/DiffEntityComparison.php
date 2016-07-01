@@ -7,10 +7,8 @@
 
 namespace Drupal\diff;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\Element;
 use Drupal\Component\Diff\Diff;
 use Drupal\Core\Datetime\DateFormatter;
