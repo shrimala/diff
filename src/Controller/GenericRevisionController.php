@@ -198,7 +198,7 @@ class GenericRevisionController extends EntityComparisonBase {
 
     foreach ($revisions as $revision) {
       if ($revision instanceof EntityRevisionLogInterface || $revision instanceof NodeInterface) {
-        $revision_log = $this->entityComparison->nonBreakingSpace;
+        $revision_log = $this->nonBreakingSpace;
 
         if ($revision instanceof EntityRevisionLogInterface) {
           $revision_log = Xss::filter($revision->getRevisionLogMessage());
@@ -210,7 +210,7 @@ class GenericRevisionController extends EntityComparisonBase {
           '#theme' => 'username',
           '#account' => $revision->uid->entity,
         );
-        $revision_date = $this->entityComparison->date->format($revision->getRevisionCreationTime(), 'short');
+        $revision_date = $this->date->format($revision->getRevisionCreationTime(), 'short');
         $revision_link = $this->t($revision_log . '@date', array(
             '@date' => $this->l($revision_date, Url::fromRoute("entity.$entity_type_id.revision", array(
               $entity_type_id => $revision->id(),
@@ -230,7 +230,7 @@ class GenericRevisionController extends EntityComparisonBase {
       //   'colspan' => 1,
       // );
       $header[] = array(
-        'data' => array('#markup' => $this->entityComparison->nonBreakingSpace),
+        'data' => array('#markup' => $this->nonBreakingSpace),
         'colspan' => 1,
       );
       $header[] = array(
@@ -274,10 +274,10 @@ class GenericRevisionController extends EntityComparisonBase {
     }
     else {
       // Second column.
-      $row[] = $this->entityComparison->nonBreakingSpace;
+      $row[] = $this->nonBreakingSpace;
     }
     // Third column.
-    $row[] = $this->entityComparison->nonBreakingSpace;
+    $row[] = $this->nonBreakingSpace;
     // Find the next revision.
     $i = 0;
     while ($i < $revisions_count && $right_vid >= $vids[$i]) {
@@ -301,7 +301,7 @@ class GenericRevisionController extends EntityComparisonBase {
     }
     else {
       // Forth column.
-      $row[] = $this->entityComparison->nonBreakingSpace;
+      $row[] = $this->nonBreakingSpace;
     }
 
     // If there are only 2 revision return an empty row.

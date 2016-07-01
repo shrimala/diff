@@ -42,13 +42,6 @@ class DiffEntityComparison {
   protected $diffFormatter;
 
   /**
-   * The date service.
-   *
-   * @var \Drupal\Core\Datetime\DateFormatter
-   */
-  public $date;
-
-  /**
    * Wrapper object for writing/reading simple configuration from diff.settings.yml
    */
   public $config;
@@ -64,11 +57,6 @@ class DiffEntityComparison {
   protected $fieldTypeDefinitions;
 
   /**
-   * Represents non breaking space HTML character entity marked as safe markup.
-   */
-  public $nonBreakingSpace;
-
-  /**
    * The entity comparison service for diff.
    */
   protected $entityParser;
@@ -80,21 +68,17 @@ class DiffEntityComparison {
    *   Diff formatter service.
    * @param DiffFormatter $diff_formatter
    *   Diff formatter service.
-   * @param DateFormatter $date
-   *   DateFormatter service.
    * @param PluginManagerInterface $plugin_manager
    *   The Plugin manager service.
    * @param DiffEntityParser $entityParser
    *   The diff field builder plugin manager.
    */
-  public function __construct(ConfigFactory $config_factory, DiffFormatter $diff_formatter, DateFormatter $date, PluginManagerInterface $plugin_manager, DiffEntityParser $entityParser) {
+  public function __construct(ConfigFactory $config_factory, DiffFormatter $diff_formatter, PluginManagerInterface $plugin_manager, DiffEntityParser $entityParser) {
     $this->config_factory = $config_factory;
     $this->diffFormatter = $diff_formatter;
-    $this->date = $date;
     $this->fieldTypeDefinitions = $plugin_manager->getDefinitions();
     $this->config = $this->config_factory->get('diff.settings');
     $this->pluginsConfig = $this->config_factory->get('diff.plugins');
-    $this->nonBreakingSpace = new FormattableMarkup('&nbsp;', array());
     $this->entityParser = $entityParser;
     
   }

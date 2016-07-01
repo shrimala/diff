@@ -11,6 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\diff\DiffEntityComparison;
+use Drupal\Core\Datetime\DateFormatter;
 
 /**
  * Builds an array of data out of entity fields.
@@ -24,14 +25,24 @@ class EntityComparisonBase extends ControllerBase {
    * The entity comparison service for diff.
    */
   protected $entityComparison;
+  
+  /**
+   * The date service.
+   *
+   * @var \Drupal\Core\Datetime\DateFormatter
+   */
+  protected $date;
 
   /**
    * Constructs an EntityComparisonBase object.
    *
    * @param DiffEntityComparison $entityComparison
    *   The diff entity comparison service.
+   * @param DateFormatter $date
+   *   DateFormatter service.
    */
-  public function __construct($entityComparison) {
+  public function __construct(DateFormatter $date, $entityComparison) {
+	$this->date = $date;
     $this->entityComparison = $entityComparison;
   }
 
@@ -40,6 +51,7 @@ class EntityComparisonBase extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
+      $container->get('date.formatter'),
       $container->get('diff.entity_comparison')
     );
   }
