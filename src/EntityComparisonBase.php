@@ -43,7 +43,7 @@ class EntityComparisonBase extends ControllerBase {
    *   DateFormatter service.
    */
   public function __construct(DateFormatter $date, $entityComparison) {
-	$this->date = $date;
+    $this->date = $date;
     $this->entityComparison = $entityComparison;
   }
 
