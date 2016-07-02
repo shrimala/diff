@@ -1,24 +1,18 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\diff\DiffEntityComparison.
- */
-
 namespace Drupal\diff;
 
+use Drupal\Core\Config\ConfigFactory;
 use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Render\Element;
 use Drupal\Component\Diff\Diff;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Mail\MailFormatHelper;
-use Drupal\Core\Config\ConfigFactory;
+use Drupal\Component\Utility\Xss;
 
 /**
- * Builds an array of data out of entity fields.
- *
- * The resulted data is then passed through the Diff component and
- * displayed on the UI and represents the differences between two entities.
+ * Entity comparison service that compares fields on a pair of entities
+ * and helps to prepare a display of differences.
  */
 class DiffEntityComparison {
 
@@ -30,13 +24,6 @@ class DiffEntityComparison {
   protected $configfactory;
 
   /**
-   * DiffFormatter service.
-   *
-   * @var \Drupal\diff\DiffFormatter
-   */
-  protected $diffFormatter;
-
-  /**
    * Wrapper obj. for write/read a simple configuration from diff.settings.yml.
    */
   public $config;
@@ -45,6 +32,13 @@ class DiffEntityComparison {
    * Wrapper object for write/read a simple configuration from diff.plugins.yml.
    */
   protected $pluginsConfig;
+
+  /**
+   * DiffFormatter service.
+   *
+   * @var \Drupal\diff\DiffFormatter
+   */
+  protected $diffFormatter;
 
   /**
    * A list of all the field types from the system and their definitions.
@@ -70,10 +64,10 @@ class DiffEntityComparison {
    */
   public function __construct(ConfigFactory $config_factory, DiffFormatter $diff_formatter, PluginManagerInterface $plugin_manager, DiffEntityParser $entity_parser) {
     $this->configfactory = $config_factory;
-    $this->diffFormatter = $diff_formatter;
-    $this->fieldTypeDefinitions = $plugin_manager->getDefinitions();
     $this->config = $this->configfactory->get('diff.settings');
     $this->pluginsConfig = $this->configfactory->get('diff.plugins');
+    $this->diffFormatter = $diff_formatter;
+    $this->fieldTypeDefinitions = $plugin_manager->getDefinitions();
     $this->entityParser = $entity_parser;
   }
 
@@ -173,7 +167,7 @@ class DiffEntityComparison {
    * @return array
    *   Array resulted after combining the left and right values.
    */
-  protected function combineFields($left_values, $right_values) {
+  protected function combineFields(string $left_values, string $right_values) {
     $result = array(
       '#left' => array(),
       '#right' => array(),
@@ -242,7 +236,7 @@ class DiffEntityComparison {
    * @param string $diff
    *   Array of strings.
    */
-  public function processStateLine(&$diff) {
+  public function processStateLine(string &$diff) {
     foreach ($diff['#states'] as $state => $data) {
       if (isset($data['#left'])) {
         if (is_string($data['#left'])) {
@@ -271,13 +265,13 @@ class DiffEntityComparison {
    * @param string $markdown
    *   Key of the markdown function to be applied to the items.
    *   One of drupal_html_to_text, filter_xss, filter_xss_all.
-   * @param int $items
+   * @param string $items
    *   String to be processed.
    *
    * @return array|string
    *   Result after markdown was applied on $items.
    */
-  protected function applyMarkdown($markdown, $items) {
+  protected function applyMarkdown(string $markdown, string $items) {
     if (!$markdown) {
       return $items;
     }
