@@ -165,9 +165,9 @@ class DiffEntityComparison {
   /**
    * Combine two fields into an array with keys '#left' and '#right'.
    *
-   * @param $left_values
+   * @param string $left_values
    *   Entity field formatted into an array of strings.
-   * @param $right_values
+   * @param string $right_values
    *   Entity field formatted into an array of strings.
    *
    * @return array
@@ -239,10 +239,10 @@ class DiffEntityComparison {
   /**
    * Splits the strings into lines and counts the resulted number of lines.
    *
-   * @param $diff
+   * @param string $diff
    *   Array of strings.
    */
-  function processStateLine(&$diff) {
+  public function processStateLine(&$diff) {
     foreach ($diff['#states'] as $state => $data) {
       if (isset($data['#left'])) {
         if (is_string($data['#left'])) {
@@ -268,10 +268,10 @@ class DiffEntityComparison {
   /**
    * Applies a markdown function to a string.
    *
-   * @param $markdown
+   * @param string $markdown
    *   Key of the markdown function to be applied to the items.
    *   One of drupal_html_to_text, filter_xss, filter_xss_all.
-   * @param $items
+   * @param int $items
    *   String to be processed.
    *
    * @return array|string
