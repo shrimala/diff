@@ -6,7 +6,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Datetime\DateFormatter;
 use Drupal\diff\DiffEntityComparison;
-use Drupal\Component\Utility\Xss;
 
 /**
  * Provides a base class for diff revision controllers.
