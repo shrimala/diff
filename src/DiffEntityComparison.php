@@ -8,7 +8,6 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Component\Diff\Diff;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Mail\MailFormatHelper;
-use Drupal\Component\Utility\Xss;
 
 /**
  * Entity comparison service that compares fields on a pair of entities
@@ -159,15 +158,15 @@ class DiffEntityComparison {
   /**
    * Combine two fields into an array with keys '#left' and '#right'.
    *
-   * @param string $left_values
+   * @param $left_values
    *   Entity field formatted into an array of strings.
-   * @param string $right_values
+   * @param $right_values
    *   Entity field formatted into an array of strings.
    *
    * @return array
    *   Array resulted after combining the left and right values.
    */
-  protected function combineFields(string $left_values, string $right_values) {
+  protected function combineFields($left_values, $right_values) {
     $result = array(
       '#left' => array(),
       '#right' => array(),
@@ -233,10 +232,10 @@ class DiffEntityComparison {
   /**
    * Splits the strings into lines and counts the resulted number of lines.
    *
-   * @param string $diff
+   * @param $diff
    *   Array of strings.
    */
-  public function processStateLine(string &$diff) {
+  protected function processStateLine(&$diff) {
     foreach ($diff['#states'] as $state => $data) {
       if (isset($data['#left'])) {
         if (is_string($data['#left'])) {
@@ -262,16 +261,16 @@ class DiffEntityComparison {
   /**
    * Applies a markdown function to a string.
    *
-   * @param string $markdown
+   * @param $markdown
    *   Key of the markdown function to be applied to the items.
    *   One of drupal_html_to_text, filter_xss, filter_xss_all.
-   * @param string $items
+   * @param $items
    *   String to be processed.
    *
    * @return array|string
    *   Result after markdown was applied on $items.
    */
-  protected function applyMarkdown(string $markdown, string $items) {
+  protected function applyMarkdown($markdown, $items) {
     if (!$markdown) {
       return $items;
     }

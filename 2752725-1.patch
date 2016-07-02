@@ -400,10 +400,17 @@ index 0000000..a1d31ed
 diff --git a/src/EntityComparisonBase.php b/src/EntityComparisonBase.php
 old mode 100644
 new mode 100755
-index 850b810..f0dce18
+index 850b810..dba7181
 --- a/src/EntityComparisonBase.php
 +++ b/src/EntityComparisonBase.php
-@@ -8,15 +8,11 @@
+@@ -1,90 +1,41 @@
+ <?php
+ 
+-/**
+- * @file
+- * Contains \Drupal\diff\EntityComparisonBase.
+- */
+-
  namespace Drupal\diff;
  
  use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -412,35 +419,36 @@ index 850b810..f0dce18
  use Drupal\Core\Controller\ControllerBase;
 -use Drupal\Core\Render\Element;
 -use Drupal\Component\Diff\Diff;
-+use Drupal\Core\Entity\ContentEntityInterface;
-+use Drupal\diff\DiffEntityComparison;
  use Drupal\Core\Datetime\DateFormatter;
++use Drupal\diff\DiffEntityComparison;
  use Drupal\Component\Utility\Xss;
 -use Drupal\Core\Mail\MailFormatHelper;
 -use Drupal\Component\Render\FormattableMarkup;
  
  /**
-  * Builds an array of data out of entity fields.
-@@ -27,12 +23,10 @@ use Drupal\Component\Render\FormattableMarkup;
+- * Builds an array of data out of entity fields.
+- *
+- * The resulted data is then passed through the Diff component and
+- * displayed on the UI and represents the differences between two entities.
++ * Provides a base class for diff revision controllers.
+  */
  class EntityComparisonBase extends ControllerBase {
  
    /**
 -   * DiffFormatter service.
 -   *
 -   * @var \Drupal\diff\DiffFormatter
-+   * The entity comparison service for diff.
-    */
+-   */
 -  protected $diffFormatter;
 -
-+  protected $entityComparison;
-+  
-   /**
+-  /**
     * The date service.
     *
-@@ -41,50 +35,16 @@ class EntityComparisonBase extends ControllerBase {
+    * @var \Drupal\Core\Datetime\DateFormatter
+    */
    protected $date;
- 
-   /**
+-
+-  /**
 -   * Wrapper object for writing/reading simple configuration from diff.settings.yml
 -   */
 -  protected $config;
@@ -455,29 +463,32 @@ index 850b810..f0dce18
 -   */
 -  protected $fieldTypeDefinitions;
 -
--  /**
++  
+   /**
 -   * Represents non breaking space HTML character entity marked as safe markup.
--   */
++   * The entity comparison service for diff.
+    */
 -  protected $nonBreakingSpace;
 -
 -  /**
 -   * The entity parser service for diff.
 -   */
 -  protected $entityParser;
--
--  /**
++  protected $entityComparison;
+ 
+   /**
     * Constructs an EntityComparisonBase object.
     *
 -   * @param DiffFormatter $diff_formatter
 -   *   Diff formatter service.
-+   * @param DiffEntityComparison $entityComparison
-+   *   The diff entity comparison service.
     * @param DateFormatter $date
     *   DateFormatter service.
 -   * @param PluginManagerInterface $plugin_manager
 -   *   The Plugin manager service.
 -   * @param DiffEntityParser $entityParser
 -   *   The diff field builder plugin manager.
++   * @param DiffEntityComparison $entityComparison
++   *   The diff entity comparison service.
     */
 -  public function __construct(DiffFormatter $diff_formatter, DateFormatter $date, PluginManagerInterface $plugin_manager, DiffEntityParser $entityParser) {
 -    $this->diffFormatter = $diff_formatter;
@@ -492,7 +503,7 @@ index 850b810..f0dce18
    }
  
    /**
-@@ -92,230 +52,9 @@ class EntityComparisonBase extends ControllerBase {
+@@ -92,230 +43,9 @@ class EntityComparisonBase extends ControllerBase {
     */
    public static function create(ContainerInterface $container) {
      return new static(
@@ -500,9 +511,10 @@ index 850b810..f0dce18
        $container->get('date.formatter'),
 -      $container->get('plugin.manager.field.field_type'),
 -      $container->get('diff.entity_parser')
--    );
--  }
--
++      $container->get('diff.entity_comparison')
+     );
+   }
+ 
 -  /**
 -   * This method should return an array of items ready to be compared.
 -   *
@@ -603,8 +615,7 @@ index 850b810..f0dce18
 -    $result = array(
 -      '#left' => array(),
 -      '#right' => array(),
-+      $container->get('diff.entity_comparison')
-     );
+-    );
 -    $max = max(array(count($left_values), count($right_values)));
 -    for ($delta = 0; $delta < $max; $delta++) {
 -      if (isset($left_values[$delta])) {
@@ -721,6 +732,6 @@ index 850b810..f0dce18
 -    else {
 -      return $items;
 -    }
-   }
- 
+-  }
+-
  }

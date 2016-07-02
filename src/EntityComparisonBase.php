@@ -7,6 +7,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Datetime\DateFormatter;
 use Drupal\diff\DiffEntityComparison;
 
+
 /**
  * Provides a base class for diff revision controllers.
  */
