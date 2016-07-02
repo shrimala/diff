@@ -71,6 +71,7 @@ class NodeRevisionController extends EntityComparisonBase {
 
     // Perform comparison only if both node revisions loaded successfully.
     if ($left_revision != FALSE && $right_revision != FALSE) {
+      //Get a comparison for all fields.
       $fields = $this->entityComparison->compareRevisions($left_revision, $right_revision);
       $node_base_fields = $this->entityManager()->getBaseFieldDefinitions('node');
       // Check to see if we need to display certain fields or not based on
@@ -88,9 +89,10 @@ class NodeRevisionController extends EntityComparisonBase {
           unset($fields[$field_name]);
         }
       }
-      // Build the diff rows for each field and append the field rows
-      // to the table rows.
+      
+      // Build field rows and add to the table rows.
       foreach ($fields as $field) {
+        //Build a field label row
         $field_label_row = '';
         if (!empty($field['#name'])) {
           $field_label_row = array(
@@ -99,16 +101,15 @@ class NodeRevisionController extends EntityComparisonBase {
             'class' => array('field-name'),
           );
         }
+        // Get the field diff rows.
         $field_diff_rows = $this->entityComparison->getRows(
           $field['#states'][$filter]['#left'],
           $field['#states'][$filter]['#right']
         );
-
         // Add the field label to the table only if there are changes to that field.
         if (!empty($field_diff_rows) && !empty($field_label_row)) {
           $diff_rows[] = array($field_label_row);
         }
-
         // Add field diff rows to the table rows.
         $diff_rows = array_merge($diff_rows, $field_diff_rows);
       }
