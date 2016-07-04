@@ -107,7 +107,7 @@ class GenericRevisionController extends EntityComparisonBase {
           unset($fields[$field_name]);
         }
       }
-      
+
       // Build field rows and add to the table rows.
       foreach ($fields as $field) {
         //Build a field label row
