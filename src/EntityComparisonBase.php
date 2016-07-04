@@ -7,7 +7,6 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Datetime\DateFormatter;
 use Drupal\diff\DiffEntityComparison;
 
-
 /**
  * Provides a base class for diff revision controllers.
  */
@@ -19,7 +18,7 @@ class EntityComparisonBase extends ControllerBase {
    * @var \Drupal\Core\Datetime\DateFormatter
    */
   protected $date;
-  
+
   /**
    * The entity comparison service for diff.
    */
@@ -30,12 +29,12 @@ class EntityComparisonBase extends ControllerBase {
    *
    * @param DateFormatter $date
    *   DateFormatter service.
-   * @param DiffEntityComparison $entityComparison
+   * @param DiffEntityComparison $entitycomparison
    *   The diff entity comparison service.
    */
-  public function __construct(DateFormatter $date, $entityComparison) {
+  public function __construct(DateFormatter $date, $entitycomparison) {
     $this->date = $date;
-    $this->entityComparison = $entityComparison;
+    $this->entityComparison = $entitycomparison;
   }
 
   /**

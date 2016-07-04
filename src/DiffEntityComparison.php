@@ -8,6 +8,7 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Component\Diff\Diff;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Mail\MailFormatHelper;
+use Drupal\Component\Utility\Xss;
 
 /**
  * Entity comparison service that compares fields on a pair of entities
