@@ -43,7 +43,7 @@ class NodeRevisionController extends EntityComparisonBase {
    * @param $right_vid
    *   Vid of the node revision from the right.
    * @param $filter
-   *   If $filter == 'raw' raw text is compared (including html tags)
+   *   If $filter == 'raw' raw text is compared (including html tags).
    *   If filter == 'raw-plain' markdown function is applied to the text before comparison.
    *
    * @return array
@@ -71,7 +71,7 @@ class NodeRevisionController extends EntityComparisonBase {
 
     // Perform comparison only if both node revisions loaded successfully.
     if ($left_revision != FALSE && $right_revision != FALSE) {
-      //Get a comparison for all fields.
+      // Get a comparison for all fields.
       $fields = $this->entityComparison->compareRevisions($left_revision, $right_revision);
       $node_base_fields = $this->entityManager()->getBaseFieldDefinitions('node');
       // Check to see if we need to display certain fields or not based on
@@ -92,7 +92,7 @@ class NodeRevisionController extends EntityComparisonBase {
 
       // Build field rows and add to the table rows.
       foreach ($fields as $field) {
-        //Build a field label row
+        // Build a field label row.
         $field_label_row = '';
         if (!empty($field['#name'])) {
           $field_label_row = array(
