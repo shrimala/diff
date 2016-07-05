@@ -89,7 +89,7 @@ class GenericRevisionController extends EntityComparisonBase {
 
     // Perform comparison only if both entity revisions loaded successfully.
     if ($left_revision != FALSE && $right_revision != FALSE) {
-      //Get a comparison for all fields.
+      // Get a comparison for all fields.
       $fields = $this->entityComparison->compareRevisions($left_revision, $right_revision);
       $entity_base_fields = $this->entityManager()->getBaseFieldDefinitions($entity_type_id);
       // Check to see if we need to display certain fields or not based on
@@ -110,7 +110,7 @@ class GenericRevisionController extends EntityComparisonBase {
 
       // Build field rows and add to the table rows.
       foreach ($fields as $field) {
-        //Build a field label row
+        // Build a field label row
         $field_label_row = '';
         if (!empty($field['#name'])) {
           $field_label_row = array(
