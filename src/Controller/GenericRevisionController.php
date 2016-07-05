@@ -40,11 +40,11 @@ class GenericRevisionController extends EntityComparisonBase {
    * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
    *   The route match.
    * @param \Drupal\Core\Entity\EntityInterface $left_revision
-   *   The left revision
+   *   The left revision.
    * @param \Drupal\Core\Entity\EntityInterface $right_revision
    *   The right revision.
    * @param string $filter
-   *   If $filter == 'raw' raw text is compared (including html tags)
+   *   If $filter == 'raw' raw text is compared (including html tags).
    *   If filter == 'raw-plain' markdown function is applied to the text before comparison.
    *
    * @return array
@@ -110,7 +110,7 @@ class GenericRevisionController extends EntityComparisonBase {
 
       // Build field rows and add to the table rows.
       foreach ($fields as $field) {
-        // Build a field label row
+        // Build a field label row.
         $field_label_row = '';
         if (!empty($field['#name'])) {
           $field_label_row = array(
