@@ -35,7 +35,7 @@ class EntityComparisonBase extends ControllerBase {
    *
    * @param DateFormatter $date
    *   DateFormatter service.
-   * @param DiffEntityComparison $entitycomparison
+   * @param DiffEntityComparison $entity_comparison
    *   The diff entity comparison service.
    */
   public function __construct(DateFormatter $date, $entity_comparison) {
